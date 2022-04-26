@@ -13,7 +13,7 @@ MEM = ENV['MEM'] || 6144
 CPUS = ENV['CPUS'] || 2
 
 # User Data Mount
-#SRCDIR = ENV['SRCDIR'] || "/home/"+ENV['USER']+"/test"
+SRCDIR = ENV['SRCDIR'] || "/home/"+ENV['USER']+"/slord"
 SRCDIR = ENV['SRCDIR'] || "/tmp/vagrant"
 DSTDIR = ENV['DSTDIR'] || "/home/vagrant/data"
 
@@ -54,7 +54,7 @@ end
 def configureVM(vmCfg, hostname, cpus, mem, srcdir, dstdir)
 
   # Image is 64 Gb
-  vmCfg.vm.box = "generic/ubuntu1804"
+  vmCfg.vm.box = "generic/ubuntu2004"
   
   vmCfg.vm.hostname = hostname
   vmCfg.vm.network "private_network", type: "dhcp",  :model_type => "virtio", :autostart => true
@@ -69,8 +69,8 @@ def configureVM(vmCfg, hostname, cpus, mem, srcdir, dstdir)
     provider.cpus = cpus
     provider.driver = "kvm"
     provider.disk_bus = "scsi"
-    provider.machine_virtual_size = 64
-    provider.video_vram = 64
+    provider.machine_virtual_size = 50
+    provider.video_vram = 8
 
  
     override.vm.synced_folder srcdir, dstdir, type: 'sshfs', ssh_opts_append: "-o Compression=yes", sshfs_opts_append: "-o cache=no", disabled: false, create: true
